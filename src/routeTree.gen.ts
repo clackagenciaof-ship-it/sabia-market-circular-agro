@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UltimaColheitaRouteImport } from './routes/ultima-colheita'
 import { Route as MercadoRouteImport } from './routes/mercado'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as BiomerendaRouteImport } from './routes/biomerenda'
 import { Route as AguaRouteImport } from './routes/agua'
 import { Route as IndexRouteImport } from './routes/index'
@@ -23,6 +24,11 @@ const UltimaColheitaRoute = UltimaColheitaRouteImport.update({
 const MercadoRoute = MercadoRouteImport.update({
   id: '/mercado',
   path: '/mercado',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BiomerendaRoute = BiomerendaRouteImport.update({
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/agua': typeof AguaRoute
   '/biomerenda': typeof BiomerendaRoute
+  '/dashboard': typeof DashboardRoute
   '/mercado': typeof MercadoRoute
   '/ultima-colheita': typeof UltimaColheitaRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agua': typeof AguaRoute
   '/biomerenda': typeof BiomerendaRoute
+  '/dashboard': typeof DashboardRoute
   '/mercado': typeof MercadoRoute
   '/ultima-colheita': typeof UltimaColheitaRoute
 }
@@ -60,19 +68,33 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/agua': typeof AguaRoute
   '/biomerenda': typeof BiomerendaRoute
+  '/dashboard': typeof DashboardRoute
   '/mercado': typeof MercadoRoute
   '/ultima-colheita': typeof UltimaColheitaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/agua' | '/biomerenda' | '/mercado' | '/ultima-colheita'
+  fullPaths:
+    | '/'
+    | '/agua'
+    | '/biomerenda'
+    | '/dashboard'
+    | '/mercado'
+    | '/ultima-colheita'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/agua' | '/biomerenda' | '/mercado' | '/ultima-colheita'
+  to:
+    | '/'
+    | '/agua'
+    | '/biomerenda'
+    | '/dashboard'
+    | '/mercado'
+    | '/ultima-colheita'
   id:
     | '__root__'
     | '/'
     | '/agua'
     | '/biomerenda'
+    | '/dashboard'
     | '/mercado'
     | '/ultima-colheita'
   fileRoutesById: FileRoutesById
@@ -81,6 +103,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AguaRoute: typeof AguaRoute
   BiomerendaRoute: typeof BiomerendaRoute
+  DashboardRoute: typeof DashboardRoute
   MercadoRoute: typeof MercadoRoute
   UltimaColheitaRoute: typeof UltimaColheitaRoute
 }
@@ -99,6 +122,13 @@ declare module '@tanstack/react-router' {
       path: '/mercado'
       fullPath: '/mercado'
       preLoaderRoute: typeof MercadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/biomerenda': {
@@ -129,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AguaRoute: AguaRoute,
   BiomerendaRoute: BiomerendaRoute,
+  DashboardRoute: DashboardRoute,
   MercadoRoute: MercadoRoute,
   UltimaColheitaRoute: UltimaColheitaRoute,
 }
