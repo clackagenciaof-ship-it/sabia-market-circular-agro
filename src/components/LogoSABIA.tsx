@@ -2,19 +2,22 @@ import logoUrl from "@/assets/logo-sabia.png";
 
 type Props = {
   className?: string;
-  /** Reservado para compatibilidade — a logo oficial já contém o wordmark. */
   showWordmark?: boolean;
-  /** Altura em pixels. */
   size?: number;
 };
 
-export function LogoSABIA({ className = "", size = 44 }: Props) {
+/**
+ * Logo oficial do SABIÁ Market (já inclui o wordmark "SABIÁ Market").
+ * Use `className` com utilitários de altura responsivos (ex.: "h-10 sm:h-12")
+ * ou passe `size` em px para altura fixa.
+ */
+export function LogoSABIA({ className = "", size }: Props) {
   return (
     <img
       src={logoUrl}
       alt="SABIÁ Market — Sistema Agroalimentar Biointeligente"
-      style={{ height: size, width: "auto", maxWidth: "100%" }}
-      className={`object-contain shrink-0 select-none ${className}`}
+      style={size ? { height: size, width: "auto" } : undefined}
+      className={`object-contain shrink-0 select-none w-auto max-w-full ${className}`}
       draggable={false}
     />
   );
