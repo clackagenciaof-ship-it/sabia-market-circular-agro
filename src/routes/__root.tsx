@@ -116,10 +116,50 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const navItems = [
+    { to: "/", label: "Início" },
+    { to: "/mercado", label: "Mercado Local" },
+    { to: "/ultima-colheita", label: "Última Colheita" },
+    { to: "/agua", label: "Água Inteligente" },
+    { to: "/biomerenda", label: "BioMerenda" },
+    { to: "/dashboard", label: "Dashboard" },
+  ];
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Outlet />
+      <div className="min-h-screen flex flex-col bg-background text-foreground">
+        <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
+          <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between gap-4">
+            <Link to="/" className="flex items-center gap-2 font-bold text-primary">
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm">
+                S
+              </span>
+              <span className="hidden sm:inline">SABIÁ Market</span>
+            </Link>
+            <nav className="flex flex-wrap items-center gap-1 text-sm">
+              {navItems.map((n) => (
+                <Link
+                  key={n.to}
+                  to={n.to}
+                  activeOptions={{ exact: n.to === "/" }}
+                  className="rounded-md px-2.5 py-1.5 text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors [&.active]:bg-primary [&.active]:text-primary-foreground"
+                >
+                  {n.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        </header>
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <footer className="border-t mt-12">
+          <div className="mx-auto max-w-6xl px-4 py-6 text-xs text-muted-foreground flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p>© SABIÁ Market — Produzir melhor, vender a tempo, gastar menos e devolver vida ao solo.</p>
+            <p>U. E. Osvaldo da Costa e Silva · Floriano-PI · 10ª GRE</p>
+          </div>
+        </footer>
+      </div>
     </QueryClientProvider>
   );
 }
