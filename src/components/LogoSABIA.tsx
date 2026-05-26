@@ -2,29 +2,20 @@ import logoUrl from "@/assets/logo-sabia.png";
 
 type Props = {
   className?: string;
+  /** Reservado para compatibilidade — a logo oficial já contém o wordmark. */
   showWordmark?: boolean;
+  /** Altura em pixels. */
   size?: number;
 };
 
-export function LogoSABIA({ className = "", showWordmark = true, size = 44 }: Props) {
+export function LogoSABIA({ className = "", size = 44 }: Props) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <img
-        src={logoUrl}
-        alt="SABIÁ Market"
-        style={{ height: size, width: "auto" }}
-        className="object-contain shrink-0"
-      />
-      {showWordmark && (
-        <span className="hidden md:inline-flex flex-col leading-tight">
-          <span className="text-base font-extrabold text-brand-blue tracking-tight">
-            SABIÁ <span className="text-brand-green">Market</span>
-          </span>
-          <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">
-            Sistema Agroalimentar Biointeligente
-          </span>
-        </span>
-      )}
-    </div>
+    <img
+      src={logoUrl}
+      alt="SABIÁ Market — Sistema Agroalimentar Biointeligente"
+      style={{ height: size, width: "auto", maxWidth: "100%" }}
+      className={`object-contain shrink-0 select-none ${className}`}
+      draggable={false}
+    />
   );
 }

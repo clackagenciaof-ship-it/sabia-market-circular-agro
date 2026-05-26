@@ -97,8 +97,8 @@ function RootComponent() {
       <div className="min-h-screen flex flex-col bg-background text-foreground">
         <header className="sticky top-0 z-40 border-b bg-white/95 backdrop-blur shadow-sm">
           <div className="mx-auto max-w-6xl px-4 py-2.5 flex items-center justify-between gap-4">
-            <Link to="/" onClick={() => setOpen(false)} className="shrink-0">
-              <LogoSABIA size={42} />
+            <Link to="/" onClick={() => setOpen(false)} className="shrink-0 flex items-center">
+              <LogoSABIA className="h-10 sm:h-12 lg:h-14" size={undefined as unknown as number} />
             </Link>
             <nav className="hidden lg:flex items-center gap-1 text-sm font-medium">
               {navItems.map((n) => (
