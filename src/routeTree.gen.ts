@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UltimaColheitaRouteImport } from './routes/ultima-colheita'
 import { Route as MercadoRouteImport } from './routes/mercado'
+import { Route as AguaRouteImport } from './routes/agua'
 import { Route as IndexRouteImport } from './routes/index'
 
 const UltimaColheitaRoute = UltimaColheitaRouteImport.update({
@@ -23,6 +24,11 @@ const MercadoRoute = MercadoRouteImport.update({
   path: '/mercado',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AguaRoute = AguaRouteImport.update({
+  id: '/agua',
+  path: '/agua',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,30 +37,34 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/agua': typeof AguaRoute
   '/mercado': typeof MercadoRoute
   '/ultima-colheita': typeof UltimaColheitaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/agua': typeof AguaRoute
   '/mercado': typeof MercadoRoute
   '/ultima-colheita': typeof UltimaColheitaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/agua': typeof AguaRoute
   '/mercado': typeof MercadoRoute
   '/ultima-colheita': typeof UltimaColheitaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/mercado' | '/ultima-colheita'
+  fullPaths: '/' | '/agua' | '/mercado' | '/ultima-colheita'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/mercado' | '/ultima-colheita'
-  id: '__root__' | '/' | '/mercado' | '/ultima-colheita'
+  to: '/' | '/agua' | '/mercado' | '/ultima-colheita'
+  id: '__root__' | '/' | '/agua' | '/mercado' | '/ultima-colheita'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AguaRoute: typeof AguaRoute
   MercadoRoute: typeof MercadoRoute
   UltimaColheitaRoute: typeof UltimaColheitaRoute
 }
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MercadoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/agua': {
+      id: '/agua'
+      path: '/agua'
+      fullPath: '/agua'
+      preLoaderRoute: typeof AguaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AguaRoute: AguaRoute,
   MercadoRoute: MercadoRoute,
   UltimaColheitaRoute: UltimaColheitaRoute,
 }
