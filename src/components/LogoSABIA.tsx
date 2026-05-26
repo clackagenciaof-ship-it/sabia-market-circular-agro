@@ -6,19 +6,25 @@ type Props = {
   size?: number;
 };
 
-/**
- * Logo oficial do SABIÁ Market (já inclui o wordmark "SABIÁ Market").
- * Use `className` com utilitários de altura responsivos (ex.: "h-10 sm:h-12")
- * ou passe `size` em px para altura fixa.
- */
-export function LogoSABIA({ className = "", size }: Props) {
+export function LogoSABIA({ className = "", showWordmark = true, size = 44 }: Props) {
   return (
-    <img
-      src={logoUrl}
-      alt="SABIÁ Market — Sistema Agroalimentar Biointeligente"
-      style={size ? { height: size, width: "auto" } : undefined}
-      className={`object-contain shrink-0 select-none w-auto max-w-full ${className}`}
-      draggable={false}
-    />
+    <div className={`flex items-center gap-2 ${className}`}>
+      <img
+        src={logoUrl}
+        alt="SABIÁ Market"
+        style={{ height: size, width: "auto" }}
+        className="object-contain shrink-0"
+      />
+      {showWordmark && (
+        <span className="hidden md:inline-flex flex-col leading-tight">
+          <span className="text-base font-extrabold text-brand-blue tracking-tight">
+            SABIÁ <span className="text-brand-green">Market</span>
+          </span>
+          <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-medium">
+            Sistema Agroalimentar Biointeligente
+          </span>
+        </span>
+      )}
+    </div>
   );
 }
