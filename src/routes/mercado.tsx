@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
-import { Search, Plus, ShoppingBasket } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
+import { Search, Plus, ShoppingBasket, ImageIcon, Upload } from "lucide-react";
 import { CATEGORIAS, uid, useOrders, useProducts, type Product } from "../lib/store";
 
 export const Route = createFileRoute("/mercado")({
@@ -13,60 +13,77 @@ function Mercado() {
   const [q, setQ] = useState("");
   const [cat, setCat] = useState<string>("Todas");
   const [showForm, setShowForm] = useState(false);
+  const [reserveFor, setReserveFor] = useState<Product | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [fotoPreview, setFotoPreview] = useState<string>("");
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const filtered = useMemo(() => {
     return products.filter((p) => {
       const matchQ =
-        !q ||
-        p.nome.toLowerCase().includes(q.toLowerCase()) ||
-        p.produtor.toLowerCase().includes(q.toLowerCase());
+        !q || p.nome.toLowerCase().includes(q.toLowerCase()) || p.produtor.toLowerCase().includes(q.toLowerCase());
       const matchC = cat === "Todas" || p.categoria === cat;
       return matchQ && matchC;
     });
   }, [products, q, cat]);
 
-  function reservar(p: Product) {
-    if (p.estoque <= 0) return;
-    setProducts(products.map((x) => (x.id === p.id ? { ...x, estoque: x.estoque - 1 } : x)));
+  function confirmarReserva(p: Product, comprador: string, qty: number) {
+    if (qty <= 0 || qty > p.estoque) return;
+    setProducts(products.map((x) => (x.id === p.id ? { ...x, estoque: x.estoque - qty } : x)));
     setOrders([
       {
         id: uid(),
         produtoId: p.id,
         produto: p.nome,
         produtor: p.produtor,
-        quantidade: 1,
-        total: p.preco,
+        comprador,
+        quantidade: qty,
+        total: p.preco * qty,
         data: new Date().toISOString(),
       },
       ...orders,
     ]);
-    setToast(`Reserva de "${p.nome}" registrada!`);
-    setTimeout(() => setToast(null), 2500);
+    setToast(`Reserva de ${qty} ${p.unidade} de "${p.nome}" confirmada para ${comprador}!`);
+    setReserveFor(null);
+    setTimeout(() => setToast(null), 3000);
+  }
+
+  function onFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = () => setFotoPreview(String(reader.result || ""));
+    reader.readAsDataURL(f);
   }
 
   function addProduto(form: HTMLFormElement) {
     const data = new FormData(form);
+    const urlFoto = String(data.get("fotoUrl") || "").trim();
     const novo: Product = {
       id: uid(),
       nome: String(data.get("nome") || ""),
       categoria: String(data.get("categoria") || CATEGORIAS[0]),
       preco: Number(data.get("preco") || 0),
+      unidade: String(data.get("unidade") || "unidade"),
       produtor: String(data.get("produtor") || ""),
       estoque: Number(data.get("estoque") || 0),
+      foto: fotoPreview || urlFoto || undefined,
     };
     if (!novo.nome || !novo.produtor) return;
     setProducts([novo, ...products]);
     form.reset();
+    setFotoPreview("");
     setShowForm(false);
+    setToast(`Produto "${novo.nome}" cadastrado!`);
+    setTimeout(() => setToast(null), 2500);
   }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
       <header className="mb-6">
-        <h1 className="text-3xl font-bold">Mercado Local</h1>
-        <p className="text-muted-foreground">
-          Produtos frescos diretamente dos produtores da região. {orders.length} reservas até agora.
+        <h1 className="text-3xl sm:text-4xl font-extrabold">Mercado Local</h1>
+        <p className="text-muted-foreground mt-1">
+          Produtos frescos diretamente dos produtores da região · <strong>{orders.length}</strong> reservas registradas.
         </p>
       </header>
 
@@ -77,85 +94,196 @@ function Mercado() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Buscar produto ou produtor..."
-            className="w-full pl-9 pr-3 py-2 rounded-md border bg-card text-sm focus:outline-none focus:ring-2 focus:ring-ring"
+            className="w-full pl-9 pr-3 py-2.5 rounded-lg border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </div>
-        <select
-          value={cat}
-          onChange={(e) => setCat(e.target.value)}
-          className="rounded-md border bg-card px-3 py-2 text-sm"
-        >
+        <select value={cat} onChange={(e) => setCat(e.target.value)} className="rounded-lg border bg-white px-3 py-2.5 text-sm">
           <option>Todas</option>
-          {CATEGORIAS.map((c) => (
-            <option key={c}>{c}</option>
-          ))}
+          {CATEGORIAS.map((c) => <option key={c}>{c}</option>)}
         </select>
         <button
           onClick={() => setShowForm((s) => !s)}
-          className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+          className="inline-flex items-center justify-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-sm font-semibold text-accent-foreground shadow hover:bg-accent/90"
         >
-          <Plus className="h-4 w-4" /> Novo produto
+          <Plus className="h-4 w-4" /> Cadastrar produto
         </button>
       </div>
 
       {showForm && (
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            addProduto(e.currentTarget);
-          }}
-          className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5 rounded-lg border bg-card p-4"
+          onSubmit={(e) => { e.preventDefault(); addProduto(e.currentTarget); }}
+          className="mb-8 rounded-2xl border bg-card p-5 shadow-sm"
         >
-          <input name="nome" placeholder="Nome do produto" className="rounded-md border px-3 py-2 text-sm" required />
-          <input name="produtor" placeholder="Produtor" className="rounded-md border px-3 py-2 text-sm" required />
-          <select name="categoria" className="rounded-md border px-3 py-2 text-sm bg-background">
-            {CATEGORIAS.map((c) => (
-              <option key={c}>{c}</option>
-            ))}
-          </select>
-          <input name="preco" type="number" step="0.1" min="0" placeholder="Preço (R$)" className="rounded-md border px-3 py-2 text-sm" required />
-          <input name="estoque" type="number" min="0" placeholder="Estoque" className="rounded-md border px-3 py-2 text-sm" required />
-          <button className="sm:col-span-2 lg:col-span-5 rounded-md bg-primary text-primary-foreground py-2 text-sm font-medium hover:bg-primary/90">
-            Cadastrar produto
-          </button>
+          <h3 className="font-bold text-lg mb-4">Novo produto</h3>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <input name="nome" placeholder="Nome do produto" className="rounded-md border px-3 py-2 text-sm" required />
+            <input name="produtor" placeholder="Produtor" className="rounded-md border px-3 py-2 text-sm" required />
+            <select name="categoria" className="rounded-md border px-3 py-2 text-sm bg-white">
+              {CATEGORIAS.map((c) => <option key={c}>{c}</option>)}
+            </select>
+            <input name="preco" type="number" step="0.1" min="0" placeholder="Preço (R$)" className="rounded-md border px-3 py-2 text-sm" required />
+            <select name="unidade" className="rounded-md border px-3 py-2 text-sm bg-white">
+              <option value="unidade">por unidade</option>
+              <option value="kg">por kg</option>
+              <option value="maço">por maço</option>
+              <option value="dúzia">por dúzia</option>
+              <option value="L">por litro</option>
+            </select>
+            <input name="estoque" type="number" min="0" placeholder="Quantidade disponível" className="rounded-md border px-3 py-2 text-sm" required />
+          </div>
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-[auto_1fr_1fr] items-center">
+            <div className="flex items-center gap-3">
+              <div className="h-20 w-20 rounded-lg border bg-muted overflow-hidden flex items-center justify-center">
+                {fotoPreview ? (
+                  <img src={fotoPreview} alt="" className="h-full w-full object-cover" />
+                ) : (
+                  <ImageIcon className="h-6 w-6 text-muted-foreground" />
+                )}
+              </div>
+              <button type="button" onClick={() => fileRef.current?.click()} className="inline-flex items-center gap-2 rounded-md border bg-white px-3 py-2 text-sm hover:bg-secondary">
+                <Upload className="h-4 w-4" /> Enviar foto
+              </button>
+              <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onFileChange} />
+            </div>
+            <input
+              name="fotoUrl"
+              placeholder="Ou cole uma URL de imagem (https://...)"
+              className="rounded-md border px-3 py-2 text-sm sm:col-span-2"
+              onChange={(e) => { if (!fotoPreview && e.target.value) setFotoPreview(""); }}
+            />
+          </div>
+
+          <div className="mt-4 flex gap-2">
+            <button className="rounded-lg bg-primary text-primary-foreground px-5 py-2.5 text-sm font-semibold hover:bg-primary/90">
+              Cadastrar produto
+            </button>
+            <button type="button" onClick={() => { setShowForm(false); setFotoPreview(""); }} className="rounded-lg border bg-white px-4 py-2.5 text-sm">
+              Cancelar
+            </button>
+          </div>
         </form>
       )}
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((p) => (
-          <article key={p.id} className="rounded-xl border bg-card p-4 flex flex-col">
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <h3 className="font-semibold">{p.nome}</h3>
-                <p className="text-xs text-muted-foreground">{p.produtor}</p>
-              </div>
-              <span className="text-xs rounded-full bg-secondary px-2 py-0.5">{p.categoria}</span>
-            </div>
-            <div className="mt-4 flex items-end justify-between">
-              <div>
-                <div className="text-2xl font-bold text-primary">R$ {p.preco.toFixed(2)}</div>
-                <div className="text-xs text-muted-foreground">Estoque: {p.estoque}</div>
-              </div>
-              <button
-                disabled={p.estoque <= 0}
-                onClick={() => reservar(p)}
-                className="inline-flex items-center gap-1 rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground hover:bg-primary/90 disabled:opacity-40 disabled:cursor-not-allowed"
-              >
-                <ShoppingBasket className="h-3.5 w-3.5" /> Reservar
-              </button>
-            </div>
-          </article>
+          <ProductCard key={p.id} p={p} onReserve={() => setReserveFor(p)} />
         ))}
         {filtered.length === 0 && (
           <p className="text-sm text-muted-foreground col-span-full text-center py-12">Nenhum produto encontrado.</p>
         )}
       </div>
 
+      {reserveFor && (
+        <ReserveModal product={reserveFor} onClose={() => setReserveFor(null)} onConfirm={confirmarReserva} />
+      )}
+
       {toast && (
-        <div className="fixed bottom-6 right-6 rounded-md bg-primary text-primary-foreground px-4 py-2 text-sm shadow-lg">
+        <div className="fixed bottom-6 right-6 left-6 sm:left-auto rounded-lg bg-brand-green-dark text-white px-4 py-3 text-sm shadow-2xl max-w-md">
           {toast}
         </div>
       )}
+    </div>
+  );
+}
+
+function ProductCard({ p, onReserve }: { p: import("../lib/store").Product; onReserve: () => void }) {
+  return (
+    <article className="rounded-2xl border bg-card overflow-hidden shadow-sm hover:shadow-md transition flex flex-col">
+      <div className="aspect-[4/3] bg-brand-green-soft relative overflow-hidden">
+        {p.foto ? (
+          <img src={p.foto} alt={p.nome} className="h-full w-full object-cover" loading="lazy" />
+        ) : (
+          <div className="h-full w-full flex items-center justify-center text-brand-green">
+            <ImageIcon className="h-12 w-12 opacity-40" />
+          </div>
+        )}
+        <span className="absolute top-2 right-2 text-[11px] font-semibold rounded-full bg-white/95 text-brand-green-dark px-2.5 py-1 shadow">
+          {p.categoria}
+        </span>
+      </div>
+      <div className="p-4 flex-1 flex flex-col">
+        <h3 className="font-bold text-base leading-tight">{p.nome}</h3>
+        <p className="text-xs text-muted-foreground mt-0.5">por {p.produtor}</p>
+        <div className="mt-3 flex items-end justify-between">
+          <div>
+            <div className="text-xl font-extrabold text-primary">
+              R$ {p.preco.toFixed(2)}
+              <span className="text-xs font-medium text-muted-foreground"> /{p.unidade}</span>
+            </div>
+            <div className="text-xs text-muted-foreground">Disponível: {p.estoque} {p.unidade}</div>
+          </div>
+          <button
+            disabled={p.estoque <= 0}
+            onClick={onReserve}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-3.5 py-2 text-xs font-semibold text-accent-foreground hover:bg-accent/90 disabled:opacity-40 disabled:cursor-not-allowed shadow"
+          >
+            <ShoppingBasket className="h-3.5 w-3.5" /> Reservar
+          </button>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function ReserveModal({
+  product,
+  onClose,
+  onConfirm,
+}: {
+  product: Product;
+  onClose: () => void;
+  onConfirm: (p: Product, comprador: string, qty: number) => void;
+}) {
+  const [comprador, setComprador] = useState("");
+  const [qty, setQty] = useState(1);
+
+  return (
+    <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6" onClick={(e) => e.stopPropagation()}>
+        <h3 className="text-xl font-bold mb-1">Reservar {product.nome}</h3>
+        <p className="text-sm text-muted-foreground mb-4">{product.produtor} · R$ {product.preco.toFixed(2)}/{product.unidade}</p>
+        <form
+          onSubmit={(e) => { e.preventDefault(); if (comprador.trim()) onConfirm(product, comprador.trim(), qty); }}
+          className="space-y-3"
+        >
+          <div>
+            <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Nome do comprador</label>
+            <input
+              value={comprador}
+              onChange={(e) => setComprador(e.target.value)}
+              placeholder="Ex: Ana Clara"
+              className="mt-1 w-full rounded-md border px-3 py-2.5 text-sm"
+              required
+              autoFocus
+            />
+          </div>
+          <div>
+            <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+              Quantidade ({product.unidade})
+            </label>
+            <input
+              type="number"
+              min={1}
+              max={product.estoque}
+              value={qty}
+              onChange={(e) => setQty(Math.max(1, Math.min(product.estoque, Number(e.target.value))))}
+              className="mt-1 w-full rounded-md border px-3 py-2.5 text-sm"
+            />
+          </div>
+          <div className="rounded-lg bg-brand-green-soft p-3 text-sm">
+            Total: <strong className="text-primary">R$ {(product.preco * qty).toFixed(2)}</strong>
+          </div>
+          <div className="flex gap-2 pt-2">
+            <button type="button" onClick={onClose} className="flex-1 rounded-lg border bg-white py-2.5 text-sm font-medium">
+              Cancelar
+            </button>
+            <button type="submit" className="flex-1 rounded-lg bg-accent text-accent-foreground py-2.5 text-sm font-semibold shadow hover:bg-accent/90">
+              Confirmar reserva
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
