@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UltimaColheitaRouteImport } from './routes/ultima-colheita'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as MercadoRouteImport } from './routes/mercado'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as BiomerendaRouteImport } from './routes/biomerenda'
@@ -19,6 +20,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const UltimaColheitaRoute = UltimaColheitaRouteImport.update({
   id: '/ultima-colheita',
   path: '/ultima-colheita',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MercadoRoute = MercadoRouteImport.update({
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/biomerenda': typeof BiomerendaRoute
   '/dashboard': typeof DashboardRoute
   '/mercado': typeof MercadoRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/ultima-colheita': typeof UltimaColheitaRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/biomerenda': typeof BiomerendaRoute
   '/dashboard': typeof DashboardRoute
   '/mercado': typeof MercadoRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/ultima-colheita': typeof UltimaColheitaRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/biomerenda': typeof BiomerendaRoute
   '/dashboard': typeof DashboardRoute
   '/mercado': typeof MercadoRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/ultima-colheita': typeof UltimaColheitaRoute
 }
 export interface FileRouteTypes {
@@ -80,6 +89,7 @@ export interface FileRouteTypes {
     | '/biomerenda'
     | '/dashboard'
     | '/mercado'
+    | '/sitemap.xml'
     | '/ultima-colheita'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/biomerenda'
     | '/dashboard'
     | '/mercado'
+    | '/sitemap.xml'
     | '/ultima-colheita'
   id:
     | '__root__'
@@ -96,6 +107,7 @@ export interface FileRouteTypes {
     | '/biomerenda'
     | '/dashboard'
     | '/mercado'
+    | '/sitemap.xml'
     | '/ultima-colheita'
   fileRoutesById: FileRoutesById
 }
@@ -105,6 +117,7 @@ export interface RootRouteChildren {
   BiomerendaRoute: typeof BiomerendaRoute
   DashboardRoute: typeof DashboardRoute
   MercadoRoute: typeof MercadoRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   UltimaColheitaRoute: typeof UltimaColheitaRoute
 }
 
@@ -115,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/ultima-colheita'
       fullPath: '/ultima-colheita'
       preLoaderRoute: typeof UltimaColheitaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/mercado': {
@@ -161,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   BiomerendaRoute: BiomerendaRoute,
   DashboardRoute: DashboardRoute,
   MercadoRoute: MercadoRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   UltimaColheitaRoute: UltimaColheitaRoute,
 }
 export const routeTree = rootRouteImport

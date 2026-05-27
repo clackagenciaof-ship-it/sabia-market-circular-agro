@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sabia-market-circular-agro.lovable.app/sitemap.xml
