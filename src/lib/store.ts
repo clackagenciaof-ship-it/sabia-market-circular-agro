@@ -101,18 +101,21 @@ const seedProducts: Product[] = [
     foto: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&q=70",
   },
   {
-    id: "p4", nome: "Coentro", categoria: "Temperos", preco: 2.0, unidade: "maço",
-    produtor: "Horta Escolar Osvaldo", tipoAnunciante: "Escola", estoque: 30,
+    id: "p4", nome: "Abacaxi", categoria: "Frutas", preco: 6.0, unidade: "unidade",
+    produtor: "Horta Escolar Osvaldo", tipoAnunciante: "Escola", estoque: 25,
     cidade: "Floriano", estado: "PI",
     localComercializacao: "Escola / horta escolar",
+    pontoEntrega: "Retirada na escola",
     ultimaColheita: true, disponibilidadeEspecial: "excedente",
-    foto: "https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=600&q=70",
+    descricao: "Abacaxi maduro colhido na horta escolar.",
+    foto: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=600&q=70",
   },
   {
-    id: "p5", nome: "Macaxeira", categoria: "Raízes e tubérculos", preco: 4.0, unidade: "kg",
+    id: "p5", nome: "Cenoura", categoria: "Legumes", preco: 4.0, unidade: "kg",
     produtor: "Associação Raízes do Piauí", tipoAnunciante: "Associação", estoque: 40,
     cidade: "Itaueira", estado: "PI",
     localComercializacao: "Associação / entrega programada",
+    descricao: "Cenoura fresca, colhida na semana.",
     foto: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&q=70",
   },
 ];
@@ -120,7 +123,7 @@ const seedProducts: Product[] = [
 const seedSurplus: Surplus[] = [
   { id: "s1", produto: "Alface crespa", produtor: "Dona Maria Hortaliças", cidade: "Floriano", estado: "PI", quantidadeKg: 5, desconto: 50, tipo: "desconto", foto: "https://images.unsplash.com/photo-1622205313162-be1d5712a43f?w=600&q=70" },
   { id: "s2", produto: "Banana prata madura", produtor: "Seu João da Feira", cidade: "Floriano", estado: "PI", quantidadeKg: 8, desconto: 70, tipo: "urgente", foto: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&q=70" },
-  { id: "s3", produto: "Coentro", produtor: "Horta Escolar Osvaldo", cidade: "Floriano", estado: "PI", quantidadeKg: 3, desconto: 100, tipo: "doacao", foto: "https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=600&q=70" },
+  { id: "s3", produto: "Abacaxi", produtor: "Horta Escolar Osvaldo", cidade: "Floriano", estado: "PI", quantidadeKg: 4, desconto: 100, tipo: "doacao", foto: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=600&q=70" },
 ];
 
 const now = new Date();
@@ -130,8 +133,8 @@ const seedOrders: Order[] = [
   { id: "o1", produtoId: "p1", produto: "Alface crespa", produtor: "Dona Maria Hortaliças", comprador: "Ana Clara", quantidade: 3, total: 9.0, data: dt(0) },
   { id: "o2", produtoId: "p2", produto: "Tomate", produtor: "Sítio Boa Esperança", comprador: "Luiz Gustavo", quantidade: 2, total: 14.0, data: dt(1) },
   { id: "o3", produtoId: "p3", produto: "Banana prata", produtor: "Seu João da Feira", comprador: "Maria Clara", quantidade: 4, total: 20.0, data: dt(1) },
-  { id: "o4", produtoId: "p4", produto: "Coentro", produtor: "Horta Escolar Osvaldo", comprador: "Joiza Carvalho", quantidade: 5, total: 10.0, data: dt(2) },
-  { id: "o5", produtoId: "p5", produto: "Macaxeira", produtor: "Associação Raízes do Piauí", comprador: "Jhonnathas", quantidade: 3, total: 12.0, data: dt(3) },
+  { id: "o4", produtoId: "p4", produto: "Abacaxi", produtor: "Horta Escolar Osvaldo", comprador: "Joiza Carvalho", quantidade: 2, total: 12.0, data: dt(2) },
+  { id: "o5", produtoId: "p5", produto: "Cenoura", produtor: "Associação Raízes do Piauí", comprador: "Jhonnathas", quantidade: 3, total: 12.0, data: dt(3) },
 ];
 
 const seedWater: WaterLog[] = [
@@ -166,11 +169,11 @@ function useLocalStorage<T>(key: string, initial: T) {
   return [value, setValue] as const;
 }
 
-export const useProducts = () => useLocalStorage<Product[]>("sabia.products.v4", seedProducts);
-export const useSurplus = () => useLocalStorage<Surplus[]>("sabia.surplus.v4", seedSurplus);
-export const useOrders = () => useLocalStorage<Order[]>("sabia.orders.v4", seedOrders);
-export const useWater = () => useLocalStorage<WaterLog[]>("sabia.water.v4", seedWater);
-export const useWaste = () => useLocalStorage<WasteLog[]>("sabia.waste.v4", seedWaste);
+export const useProducts = () => useLocalStorage<Product[]>("sabia.products.v5", seedProducts);
+export const useSurplus = () => useLocalStorage<Surplus[]>("sabia.surplus.v5", seedSurplus);
+export const useOrders = () => useLocalStorage<Order[]>("sabia.orders.v5", seedOrders);
+export const useWater = () => useLocalStorage<WaterLog[]>("sabia.water.v5", seedWater);
+export const useWaste = () => useLocalStorage<WasteLog[]>("sabia.waste.v5", seedWaste);
 export const useRole = () => useLocalStorage<Role>("sabia.role.v1", "comprador");
 
 export { CATEGORIAS, TIPOS_ANUNCIANTE };
