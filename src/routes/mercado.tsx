@@ -2,8 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useRef, useState } from "react";
 import { Search, Plus, ShoppingBasket, ImageIcon, Upload } from "lucide-react";
 import { CATEGORIAS, uid, useOrders, useProducts, type Product } from "../lib/store";
+import { pageHead } from "../lib/seo";
 
 export const Route = createFileRoute("/mercado")({
+  head: () =>
+    pageHead({
+      path: "/mercado",
+      title: "Mercado Local — SABIÁ Market",
+      description:
+        "Catálogo de produtos frescos de produtores locais de Floriano-PI: verduras, legumes, frutas, temperos e raízes. Reserve direto do produtor.",
+    }),
   component: Mercado,
 });
 

@@ -1,0 +1,13 @@
+# SABIÁ Market
+
+> Sistema Agroalimentar Biointeligente de Água, Alimentos, Adubo e Mercado Local — plataforma circular que conecta produtores locais, compradores, escola e horta para produzir melhor, vender a tempo, gastar menos e devolver vida ao solo.
+
+O SABIÁ Market é um MVP educacional desenvolvido por estudantes da Unidade Escolar Osvaldo da Costa e Silva (Floriano-PI, 10ª GRE). Integra quatro frentes: mercado local, aproveitamento de excedentes (Última Colheita), irrigação inteligente (Água) e compostagem escolar (BioMerenda), além de um dashboard com o Índice SABIÁ de Circularidade.
+
+## Pages
+- [Início](/): visão geral do MVP e suas frentes circulares
+- [Mercado Local](/mercado): catálogo de produtos frescos por categoria e produtor
+- [Última Colheita](/ultima-colheita): excedentes com desconto, preço social ou doação
+- [Água Inteligente](/agua): registro de irrigação e umidade dos canteiros
+- [BioMerenda](/biomerenda): registro de resíduos vegetais e compostagem escolar
+- [Dashboard](/dashboard): indicadores de impacto e Índice SABIÁ de Circularidade

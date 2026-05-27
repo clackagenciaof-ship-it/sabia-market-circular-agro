@@ -1,8 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Leaf } from "lucide-react";
 import { uid, useWaste, type WasteLog } from "../lib/store";
+import { pageHead } from "../lib/seo";
 
 export const Route = createFileRoute("/biomerenda")({
+  head: () =>
+    pageHead({
+      path: "/biomerenda",
+      title: "BioMerenda — SABIÁ Market",
+      description:
+        "Registro de resíduos vegetais da merenda escolar destinados à compostagem e alimentação animal — devolvendo vida ao solo.",
+    }),
   component: BioMerenda,
 });
 
