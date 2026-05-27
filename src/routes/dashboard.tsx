@@ -1,8 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BarChart3, ShoppingBasket, Recycle, Droplets, Leaf, Sparkles, Users, Package } from "lucide-react";
 import { useOrders, useProducts, useSurplus, useWaste, useWater } from "../lib/store";
+import { pageHead } from "../lib/seo";
 
 export const Route = createFileRoute("/dashboard")({
+  head: () =>
+    pageHead({
+      path: "/dashboard",
+      title: "Dashboard SABIÁ — Indicadores de Circularidade",
+      description:
+        "Acompanhe pedidos, excedentes aproveitados, economia de água, resíduos compostados e o Índice SABIÁ de Circularidade.",
+    }),
   component: Dashboard,
 });
 

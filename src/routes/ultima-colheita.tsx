@@ -2,8 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { Recycle, Heart, Tag, Gift, ImageIcon, Upload } from "lucide-react";
 import { uid, useSurplus, type Surplus } from "../lib/store";
+import { pageHead } from "../lib/seo";
 
 export const Route = createFileRoute("/ultima-colheita")({
+  head: () =>
+    pageHead({
+      path: "/ultima-colheita",
+      title: "Última Colheita — SABIÁ Market",
+      description:
+        "Excedentes da colheita com desconto, preço social ou doação. Reduza perdas e amplie o acesso a alimentos frescos.",
+    }),
   component: UltimaColheita,
 });
 

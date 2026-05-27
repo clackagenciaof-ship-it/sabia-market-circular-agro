@@ -1,8 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Droplets } from "lucide-react";
 import { uid, useWater, type WaterLog } from "../lib/store";
+import { pageHead } from "../lib/seo";
 
 export const Route = createFileRoute("/agua")({
+  head: () =>
+    pageHead({
+      path: "/agua",
+      title: "Água Inteligente — SABIÁ Market",
+      description:
+        "Registro de irrigação e umidade dos canteiros para uso racional da água na produção agroalimentar local.",
+    }),
   component: Agua,
 });
 
