@@ -76,17 +76,8 @@ function Home() {
           {/* Logo card */}
           <div className="relative">
             <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-brand-green/20 via-accent/10 to-brand-blue/20 blur-2xl" />
-            <div className="relative rounded-[1.75rem] bg-white p-8 shadow-2xl border flex flex-col items-center text-center">
-              <LogoSABIA size={120} showWordmark={false} />
-              <h2 className="mt-4 text-2xl font-extrabold text-brand-blue">SABIÁ <span className="text-brand-green">Market</span></h2>
-              <p className="mt-2 text-sm text-foreground/70 max-w-xs">
-                Marketplace agroalimentar circular que fortalece o campo, a escola e o futuro.
-              </p>
-              <div className="mt-5 grid grid-cols-3 gap-3 w-full">
-                <Mini v="+120" l="Produtores" c="text-brand-green" />
-                <Mini v="+2.5k" l="Pedidos" c="text-brand-orange" />
-                <Mini v="+18t" l="Circulados" c="text-brand-blue" />
-              </div>
+            <div className="relative rounded-[1.75rem] bg-white p-10 sm:p-14 shadow-2xl border flex items-center justify-center min-h-[320px] sm:min-h-[420px]">
+              <LogoSABIA size={260} showWordmark={false} />
             </div>
           </div>
         </div>

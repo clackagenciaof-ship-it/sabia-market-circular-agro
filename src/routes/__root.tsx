@@ -13,6 +13,7 @@ import { Menu, X } from "lucide-react";
 import appCss from "../styles.css?url";
 import { LogoSABIA } from "../components/LogoSABIA";
 import { RoleSwitcher } from "../components/RoleSwitcher";
+import { useRole, type Role } from "../lib/store";
 
 function NotFoundComponent() {
   return (
@@ -107,18 +108,22 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
-const navItems = [
-  { to: "/", label: "Início" },
-  { to: "/mercado", label: "Mercado Local" },
-  { to: "/ultima-colheita", label: "Última Colheita" },
-  { to: "/agua", label: "Água Inteligente" },
-  { to: "/biomerenda", label: "BioMerenda" },
-  { to: "/dashboard", label: "Dashboard" },
-] as const;
+type NavItem = { to: string; label: string; roles: Role[] };
+const ALL_ROLES: Role[] = ["produtor", "escola", "comprador", "admin"];
+const navItems: NavItem[] = [
+  { to: "/", label: "Início", roles: ALL_ROLES },
+  { to: "/mercado", label: "Mercado Local", roles: ALL_ROLES },
+  { to: "/ultima-colheita", label: "Última Colheita", roles: ALL_ROLES },
+  { to: "/agua", label: "Água Inteligente", roles: ["produtor", "escola", "admin"] },
+  { to: "/biomerenda", label: "BioMerenda", roles: ["escola", "admin"] },
+  { to: "/dashboard", label: "Dashboard", roles: ALL_ROLES },
+];
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const [open, setOpen] = useState(false);
+  const [role] = useRole();
+  const visibleNav = navItems.filter((n) => n.roles.includes(role));
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -129,7 +134,7 @@ function RootComponent() {
               <LogoSABIA size={42} />
             </Link>
             <nav className="hidden lg:flex items-center gap-1 text-sm font-medium">
-              {navItems.map((n) => (
+              {visibleNav.map((n) => (
                 <Link
                   key={n.to}
                   to={n.to}
@@ -153,7 +158,7 @@ function RootComponent() {
           </div>
           {open && (
             <nav className="lg:hidden border-t bg-white px-4 py-3 flex flex-col gap-1 text-sm font-medium">
-              {navItems.map((n) => (
+              {visibleNav.map((n) => (
                 <Link
                   key={n.to}
                   to={n.to}
