@@ -44,6 +44,7 @@ function Agua() {
         <Stat label="Umidade média" value={`${mediaUmidade}%`} />
       </div>
 
+      <h2 className="text-xl font-bold mb-3">Registrar irrigação</h2>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -51,14 +52,15 @@ function Agua() {
         }}
         className="mb-8 grid gap-3 sm:grid-cols-4 rounded-lg border bg-card p-4"
       >
-        <input name="canteiro" placeholder="Canteiro / setor" className="rounded-md border px-3 py-2 text-sm" required />
-        <input name="litros" type="number" step="0.1" min="0" placeholder="Litros" className="rounded-md border px-3 py-2 text-sm" required />
-        <input name="umidade" type="number" min="0" max="100" placeholder="Umidade %" className="rounded-md border px-3 py-2 text-sm" required />
+        <input name="canteiro" aria-label="Canteiro ou setor" placeholder="Canteiro / setor" className="rounded-md border px-3 py-2 text-sm" required />
+        <input name="litros" aria-label="Litros irrigados" type="number" step="0.1" min="0" placeholder="Litros" className="rounded-md border px-3 py-2 text-sm" required />
+        <input name="umidade" aria-label="Umidade do solo em porcentagem" type="number" min="0" max="100" placeholder="Umidade %" className="rounded-md border px-3 py-2 text-sm" required />
         <button className="rounded-md bg-primary text-primary-foreground py-2 text-sm font-medium hover:bg-primary/90">
           Registrar
         </button>
       </form>
 
+      <h2 className="text-xl font-bold mb-3">Histórico de irrigação</h2>
       <div className="rounded-xl border bg-card overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-secondary/50 text-left">
