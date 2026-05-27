@@ -70,13 +70,13 @@ function UltimaColheita() {
         onSubmit={(e) => { e.preventDefault(); add(e.currentTarget); }}
         className="mb-8 rounded-2xl border bg-card p-5 shadow-sm"
       >
-        <h3 className="font-bold text-lg mb-4">Publicar excedente</h3>
+        <h2 className="font-bold text-lg mb-4">Publicar excedente</h2>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          <input name="produto" placeholder="Produto" className="rounded-md border px-3 py-2 text-sm" required />
-          <input name="produtor" placeholder="Produtor" className="rounded-md border px-3 py-2 text-sm" required />
-          <input name="quantidadeKg" type="number" step="0.5" min="0" placeholder="Qtd (kg)" className="rounded-md border px-3 py-2 text-sm" required />
-          <input name="desconto" type="number" min="0" max="100" placeholder="% desconto" className="rounded-md border px-3 py-2 text-sm" />
-          <select name="tipo" className="rounded-md border px-3 py-2 text-sm bg-white">
+          <input name="produto" aria-label="Nome do produto" placeholder="Produto" className="rounded-md border px-3 py-2 text-sm" required />
+          <input name="produtor" aria-label="Produtor" placeholder="Produtor" className="rounded-md border px-3 py-2 text-sm" required />
+          <input name="quantidadeKg" aria-label="Quantidade em quilogramas" type="number" step="0.5" min="0" placeholder="Qtd (kg)" className="rounded-md border px-3 py-2 text-sm" required />
+          <input name="desconto" aria-label="Percentual de desconto" type="number" min="0" max="100" placeholder="% desconto" className="rounded-md border px-3 py-2 text-sm" />
+          <select name="tipo" aria-label="Tipo de oferta" className="rounded-md border px-3 py-2 text-sm bg-white">
             <option value="desconto">Desconto</option>
             <option value="social">Preço social</option>
             <option value="doacao">Doação</option>
@@ -92,13 +92,14 @@ function UltimaColheita() {
             </button>
             <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onFileChange} />
           </div>
-          <input name="fotoUrl" placeholder="Ou cole URL de imagem" className="rounded-md border px-3 py-2 text-sm" />
+          <input name="fotoUrl" aria-label="URL da imagem" placeholder="Ou cole URL de imagem" className="rounded-md border px-3 py-2 text-sm" />
         </div>
         <button className="mt-4 rounded-lg bg-accent text-accent-foreground px-5 py-2.5 text-sm font-semibold shadow hover:bg-accent/90">
           Publicar na vitrine
         </button>
       </form>
 
+      <h2 className="text-xl font-bold mb-4">Excedentes disponíveis</h2>
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {surplus.map((s) => {
           const meta = tipoMeta[s.tipo];

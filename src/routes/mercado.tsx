@@ -250,8 +250,9 @@ function ReserveModal({
           className="space-y-3"
         >
           <div>
-            <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Nome do comprador</label>
+            <label htmlFor="comprador" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Nome do comprador</label>
             <input
+              id="comprador"
               value={comprador}
               onChange={(e) => setComprador(e.target.value)}
               placeholder="Ex: Ana Clara"
@@ -261,10 +262,11 @@ function ReserveModal({
             />
           </div>
           <div>
-            <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <label htmlFor="quantidade" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Quantidade ({product.unidade})
             </label>
             <input
+              id="quantidade"
               type="number"
               min={1}
               max={product.estoque}
