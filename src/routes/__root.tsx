@@ -13,7 +13,6 @@ import { Menu, X } from "lucide-react";
 import appCss from "../styles.css?url";
 import { LogoSABIA } from "../components/LogoSABIA";
 import { RoleSwitcher } from "../components/RoleSwitcher";
-import { useRole, type Role } from "../lib/store";
 
 function NotFoundComponent() {
   return (
@@ -64,6 +63,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "SABIÁ Market" },
       { property: "og:locale", content: "pt_BR" },
       { name: "twitter:card", content: "summary_large_image" },
+      { title: "SABIÁ Market" },
+      { property: "og:title", content: "SABIÁ Market" },
+      { name: "twitter:title", content: "SABIÁ Market" },
+      { name: "description", content: "Agricultura, água e mercado em um só ciclo.
+
+Produzir melhor, vender a tempo, gastar menos e devolver vida ao solo. Conectamos produtores locais, compradores, e" },
+      { property: "og:description", content: "Agricultura, água e mercado em um só ciclo.
+
+Produzir melhor, vender a tempo, gastar menos e devolver vida ao solo. Conectamos produtores locais, compradores, e" },
+      { name: "twitter:description", content: "Agricultura, água e mercado em um só ciclo.
+
+Produzir melhor, vender a tempo, gastar menos e devolver vida ao solo. Conectamos produtores locais, compradores, e" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/h5E5ohIG2uSnNU1YEQthzV9UoH02/social-images/social-1779858237313-ChatGPT_Image_27_de_mai._de_2026,_00_28_29.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/h5E5ohIG2uSnNU1YEQthzV9UoH02/social-images/social-1779858237313-ChatGPT_Image_27_de_mai._de_2026,_00_28_29.webp" },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
     scripts: [
@@ -108,22 +121,18 @@ function RootShell({ children }: { children: React.ReactNode }) {
   );
 }
 
-type NavItem = { to: string; label: string; roles: Role[] };
-const ALL_ROLES: Role[] = ["produtor", "escola", "comprador", "admin"];
-const navItems: NavItem[] = [
-  { to: "/", label: "Início", roles: ALL_ROLES },
-  { to: "/mercado", label: "Mercado Local", roles: ALL_ROLES },
-  { to: "/ultima-colheita", label: "Última Colheita", roles: ALL_ROLES },
-  { to: "/agua", label: "Água Inteligente", roles: ["produtor", "escola", "admin"] },
-  { to: "/biomerenda", label: "BioMerenda", roles: ["escola", "admin"] },
-  { to: "/dashboard", label: "Dashboard", roles: ALL_ROLES },
-];
+const navItems = [
+  { to: "/", label: "Início" },
+  { to: "/mercado", label: "Mercado Local" },
+  { to: "/ultima-colheita", label: "Última Colheita" },
+  { to: "/agua", label: "Água Inteligente" },
+  { to: "/biomerenda", label: "BioMerenda" },
+  { to: "/dashboard", label: "Dashboard" },
+] as const;
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const [open, setOpen] = useState(false);
-  const [role] = useRole();
-  const visibleNav = navItems.filter((n) => n.roles.includes(role));
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -134,7 +143,7 @@ function RootComponent() {
               <LogoSABIA size={42} />
             </Link>
             <nav className="hidden lg:flex items-center gap-1 text-sm font-medium">
-              {visibleNav.map((n) => (
+              {navItems.map((n) => (
                 <Link
                   key={n.to}
                   to={n.to}
@@ -158,7 +167,7 @@ function RootComponent() {
           </div>
           {open && (
             <nav className="lg:hidden border-t bg-white px-4 py-3 flex flex-col gap-1 text-sm font-medium">
-              {visibleNav.map((n) => (
+              {navItems.map((n) => (
                 <Link
                   key={n.to}
                   to={n.to}
