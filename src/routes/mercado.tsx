@@ -166,6 +166,7 @@ function Mercado() {
         </form>
       )}
 
+      <h2 className="text-xl font-bold mb-4">Produtos disponíveis</h2>
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((p) => (
           <ProductCard key={p.id} p={p} onReserve={() => setReserveFor(p)} />
