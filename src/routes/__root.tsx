@@ -85,8 +85,8 @@ Conectamos produtores locais, compradores, escolas e a horta comunitária em uma
 Conectamos produtores locais, compradores, escolas e a horta comunitária em uma plataforma simples e dinâmica." },
       { name: "twitter:description", content: "Agricultura, água e mercado em um só ciclo.
 Conectamos produtores locais, compradores, escolas e a horta comunitária em uma plataforma simples e dinâmica." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/h5E5ohIG2uSnNU1YEQthzV9UoH02/social-images/social-1779859981837-ChatGPT_Image_26_de_mai._de_2026,_20_09_02.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/h5E5ohIG2uSnNU1YEQthzV9UoH02/social-images/social-1779859981837-ChatGPT_Image_26_de_mai._de_2026,_20_09_02.webp" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/4317deaa-4436-4b22-8252-d29a17a4c298" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/4317deaa-4436-4b22-8252-d29a17a4c298" },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
     scripts: [
