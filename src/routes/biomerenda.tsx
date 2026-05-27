@@ -65,6 +65,7 @@ function BioMerenda() {
         <select name="tipo" aria-label="Destino do resíduo" className="rounded-md border px-3 py-2 text-sm bg-background">
           <option value="compostagem">Compostagem</option>
           <option value="alimentacao_animal">Alimentação animal</option>
+          <option value="reaproveitamento">Reaproveitamento (Última Colheita)</option>
         </select>
         <button className="rounded-md bg-primary text-primary-foreground py-2 text-sm font-medium hover:bg-primary/90">
           Registrar

@@ -12,6 +12,7 @@ import { Menu, X } from "lucide-react";
 
 import appCss from "../styles.css?url";
 import { LogoSABIA } from "../components/LogoSABIA";
+import { RoleSwitcher } from "../components/RoleSwitcher";
 
 function NotFoundComponent() {
   return (
@@ -123,7 +124,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen flex flex-col bg-background text-foreground">
         <header className="sticky top-0 z-40 border-b bg-white/95 backdrop-blur shadow-sm">
-          <div className="mx-auto max-w-6xl px-4 py-2.5 flex items-center justify-between gap-4">
+          <div className="mx-auto max-w-6xl px-4 py-2.5 flex items-center justify-between gap-3">
             <Link to="/" onClick={() => setOpen(false)} className="shrink-0">
               <LogoSABIA size={42} />
             </Link>
@@ -139,13 +140,16 @@ function RootComponent() {
                 </Link>
               ))}
             </nav>
-            <button
-              onClick={() => setOpen(!open)}
-              className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border bg-white text-foreground"
-              aria-label="Abrir menu"
-            >
-              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
+            <div className="flex items-center gap-2">
+              <RoleSwitcher />
+              <button
+                onClick={() => setOpen(!open)}
+                className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border bg-white text-foreground"
+                aria-label="Abrir menu"
+              >
+                {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+            </div>
           </div>
           {open && (
             <nav className="lg:hidden border-t bg-white px-4 py-3 flex flex-col gap-1 text-sm font-medium">
