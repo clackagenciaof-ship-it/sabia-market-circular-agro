@@ -44,6 +44,7 @@ function BioMerenda() {
         <Stat label="Compostado" value={`${compostado.toFixed(1)} kg`} />
       </div>
 
+      <h2 className="text-xl font-bold mb-3">Registrar resíduo</h2>
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -51,9 +52,9 @@ function BioMerenda() {
         }}
         className="mb-8 grid gap-3 sm:grid-cols-4 rounded-lg border bg-card p-4"
       >
-        <input name="origem" placeholder="Origem (cozinha, sala...)" className="rounded-md border px-3 py-2 text-sm" required />
-        <input name="pesoKg" type="number" step="0.1" min="0" placeholder="Peso (kg)" className="rounded-md border px-3 py-2 text-sm" required />
-        <select name="tipo" className="rounded-md border px-3 py-2 text-sm bg-background">
+        <input name="origem" aria-label="Origem do resíduo" placeholder="Origem (cozinha, sala...)" className="rounded-md border px-3 py-2 text-sm" required />
+        <input name="pesoKg" aria-label="Peso em quilogramas" type="number" step="0.1" min="0" placeholder="Peso (kg)" className="rounded-md border px-3 py-2 text-sm" required />
+        <select name="tipo" aria-label="Destino do resíduo" className="rounded-md border px-3 py-2 text-sm bg-background">
           <option value="compostagem">Compostagem</option>
           <option value="alimentacao_animal">Alimentação animal</option>
         </select>
@@ -62,6 +63,7 @@ function BioMerenda() {
         </button>
       </form>
 
+      <h2 className="text-xl font-bold mb-3">Histórico de resíduos</h2>
       <div className="rounded-xl border bg-card overflow-hidden">
         <table className="w-full text-sm">
           <thead className="bg-secondary/50 text-left">
