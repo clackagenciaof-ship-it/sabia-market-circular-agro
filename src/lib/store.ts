@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
 
+export type Role = "produtor" | "escola" | "comprador" | "admin";
+
+export type TipoAnunciante = "Produtor" | "Escola" | "Associação" | "Cooperativa";
+
+export type DisponibilidadeEspecial = "normal" | "excedente" | "desconto" | "doacao" | "urgente";
+
 export type Product = {
   id: string;
   nome: string;
@@ -7,7 +13,15 @@ export type Product = {
   preco: number;
   unidade: string;
   produtor: string;
+  tipoAnunciante: TipoAnunciante;
   estoque: number;
+  cidade: string;
+  estado: string;
+  localComercializacao: string;
+  pontoEntrega?: string;
+  ultimaColheita?: boolean;
+  disponibilidadeEspecial?: DisponibilidadeEspecial;
+  descricao?: string;
   foto?: string;
 };
 
@@ -15,9 +29,11 @@ export type Surplus = {
   id: string;
   produto: string;
   produtor: string;
+  cidade: string;
+  estado: string;
   quantidadeKg: number;
   desconto: number;
-  tipo: "desconto" | "social" | "doacao";
+  tipo: "desconto" | "social" | "doacao" | "urgente";
   foto?: string;
 };
 
@@ -44,7 +60,7 @@ export type WasteLog = {
   id: string;
   origem: string;
   pesoKg: number;
-  tipo: "compostagem" | "alimentacao_animal";
+  tipo: "compostagem" | "alimentacao_animal" | "reaproveitamento";
   data: string;
 };
 
@@ -58,18 +74,53 @@ const CATEGORIAS = [
   "Laticínios",
 ];
 
+const TIPOS_ANUNCIANTE: TipoAnunciante[] = ["Produtor", "Escola", "Associação", "Cooperativa"];
+
 const seedProducts: Product[] = [
-  { id: "p1", nome: "Alface crespa", categoria: "Verduras", preco: 3.0, unidade: "unidade", produtor: "Dona Maria Hortaliças", estoque: 20, foto: "https://images.unsplash.com/photo-1622205313162-be1d5712a43f?w=600&q=70" },
-  { id: "p2", nome: "Tomate", categoria: "Legumes", preco: 7.0, unidade: "kg", produtor: "Sítio Boa Esperança", estoque: 15, foto: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=70" },
-  { id: "p3", nome: "Banana prata", categoria: "Frutas", preco: 5.0, unidade: "kg", produtor: "Seu João da Feira", estoque: 25, foto: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&q=70" },
-  { id: "p4", nome: "Coentro", categoria: "Temperos", preco: 2.0, unidade: "maço", produtor: "Horta Escolar Osvaldo", estoque: 30, foto: "https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=600&q=70" },
-  { id: "p5", nome: "Macaxeira", categoria: "Raízes e tubérculos", preco: 4.0, unidade: "kg", produtor: "Associação Raízes do Piauí", estoque: 40, foto: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&q=70" },
+  {
+    id: "p1", nome: "Alface crespa", categoria: "Verduras", preco: 3.0, unidade: "unidade",
+    produtor: "Dona Maria Hortaliças", tipoAnunciante: "Produtor", estoque: 20,
+    cidade: "Floriano", estado: "PI",
+    localComercializacao: "Feira local / entrega combinada",
+    pontoEntrega: "Feira do bairro Sambaíba",
+    foto: "https://images.unsplash.com/photo-1622205313162-be1d5712a43f?w=600&q=70",
+  },
+  {
+    id: "p2", nome: "Tomate", categoria: "Legumes", preco: 7.0, unidade: "kg",
+    produtor: "Sítio Boa Esperança", tipoAnunciante: "Produtor", estoque: 15,
+    cidade: "Nazaré do Piauí", estado: "PI",
+    localComercializacao: "Venda direta / entrega na comunidade",
+    foto: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=70",
+  },
+  {
+    id: "p3", nome: "Banana prata", categoria: "Frutas", preco: 5.0, unidade: "kg",
+    produtor: "Seu João da Feira", tipoAnunciante: "Produtor", estoque: 25,
+    cidade: "Floriano", estado: "PI",
+    localComercializacao: "Feira do mercado municipal",
+    pontoEntrega: "Mercado Municipal — banca 12",
+    foto: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&q=70",
+  },
+  {
+    id: "p4", nome: "Coentro", categoria: "Temperos", preco: 2.0, unidade: "maço",
+    produtor: "Horta Escolar Osvaldo", tipoAnunciante: "Escola", estoque: 30,
+    cidade: "Floriano", estado: "PI",
+    localComercializacao: "Escola / horta escolar",
+    ultimaColheita: true, disponibilidadeEspecial: "excedente",
+    foto: "https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=600&q=70",
+  },
+  {
+    id: "p5", nome: "Macaxeira", categoria: "Raízes e tubérculos", preco: 4.0, unidade: "kg",
+    produtor: "Associação Raízes do Piauí", tipoAnunciante: "Associação", estoque: 40,
+    cidade: "Itaueira", estado: "PI",
+    localComercializacao: "Associação / entrega programada",
+    foto: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&q=70",
+  },
 ];
 
 const seedSurplus: Surplus[] = [
-  { id: "s1", produto: "Alface crespa", produtor: "Dona Maria Hortaliças", quantidadeKg: 5, desconto: 50, tipo: "desconto", foto: "https://images.unsplash.com/photo-1622205313162-be1d5712a43f?w=600&q=70" },
-  { id: "s2", produto: "Banana prata madura", produtor: "Seu João da Feira", quantidadeKg: 8, desconto: 70, tipo: "social", foto: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&q=70" },
-  { id: "s3", produto: "Coentro", produtor: "Horta Escolar Osvaldo", quantidadeKg: 3, desconto: 100, tipo: "doacao", foto: "https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=600&q=70" },
+  { id: "s1", produto: "Alface crespa", produtor: "Dona Maria Hortaliças", cidade: "Floriano", estado: "PI", quantidadeKg: 5, desconto: 50, tipo: "desconto", foto: "https://images.unsplash.com/photo-1622205313162-be1d5712a43f?w=600&q=70" },
+  { id: "s2", produto: "Banana prata madura", produtor: "Seu João da Feira", cidade: "Floriano", estado: "PI", quantidadeKg: 8, desconto: 70, tipo: "urgente", foto: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&q=70" },
+  { id: "s3", produto: "Coentro", produtor: "Horta Escolar Osvaldo", cidade: "Floriano", estado: "PI", quantidadeKg: 3, desconto: 100, tipo: "doacao", foto: "https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=600&q=70" },
 ];
 
 const now = new Date();
@@ -94,6 +145,7 @@ const seedWaste: WasteLog[] = [
   { id: "r2", origem: "Cantina", pesoKg: 4.0, tipo: "compostagem", data: dt(1) },
   { id: "r3", origem: "Sala 4 - Lanche", pesoKg: 2.8, tipo: "alimentacao_animal", data: dt(2) },
   { id: "r4", origem: "Cozinha escolar", pesoKg: 5.2, tipo: "compostagem", data: dt(3) },
+  { id: "r5", origem: "Recebido Última Colheita", pesoKg: 3.0, tipo: "reaproveitamento", data: dt(2) },
 ];
 
 function useLocalStorage<T>(key: string, initial: T) {
@@ -114,12 +166,20 @@ function useLocalStorage<T>(key: string, initial: T) {
   return [value, setValue] as const;
 }
 
-export const useProducts = () => useLocalStorage<Product[]>("sabia.products.v3", seedProducts);
-export const useSurplus = () => useLocalStorage<Surplus[]>("sabia.surplus.v3", seedSurplus);
-export const useOrders = () => useLocalStorage<Order[]>("sabia.orders.v3", seedOrders);
-export const useWater = () => useLocalStorage<WaterLog[]>("sabia.water.v3", seedWater);
-export const useWaste = () => useLocalStorage<WasteLog[]>("sabia.waste.v3", seedWaste);
+export const useProducts = () => useLocalStorage<Product[]>("sabia.products.v4", seedProducts);
+export const useSurplus = () => useLocalStorage<Surplus[]>("sabia.surplus.v4", seedSurplus);
+export const useOrders = () => useLocalStorage<Order[]>("sabia.orders.v4", seedOrders);
+export const useWater = () => useLocalStorage<WaterLog[]>("sabia.water.v4", seedWater);
+export const useWaste = () => useLocalStorage<WasteLog[]>("sabia.waste.v4", seedWaste);
+export const useRole = () => useLocalStorage<Role>("sabia.role.v1", "comprador");
 
-export { CATEGORIAS };
+export { CATEGORIAS, TIPOS_ANUNCIANTE };
+
+export const ROLE_LABEL: Record<Role, string> = {
+  produtor: "Produtor / Vendedor",
+  escola: "Escola",
+  comprador: "Comprador",
+  admin: "Administrador",
+};
 
 export const uid = () => Math.random().toString(36).slice(2, 10);
