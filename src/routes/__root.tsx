@@ -50,19 +50,46 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+const SITE_URL = "https://sabia-market-circular-agro.lovable.app";
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "SABIÁ Market - Sistema Agroalimentar Biointeligente" },
-      { name: "description", content: "Produzir melhor, vender a tempo, gastar menos e devolver vida ao solo. Plataforma agroalimentar circular." },
-      { property: "og:title", content: "SABIÁ Market" },
-      { property: "og:description", content: "Mercado local, última colheita, água inteligente e BioMerenda." },
+      { name: "theme-color", content: "#1F7A3A" },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
+      { property: "og:site_name", content: "SABIÁ Market" },
+      { property: "og:locale", content: "pt_BR" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "SABIÁ Market",
+          alternateName: "Sistema Agroalimentar Biointeligente de Água, Alimentos, Adubo e Mercado Local",
+          url: SITE_URL,
+          slogan: "Produzir melhor, vender a tempo, gastar menos e devolver vida ao solo.",
+          description:
+            "Plataforma agroalimentar circular que conecta produtores locais, compradores, escola e horta comunitária.",
+          areaServed: { "@type": "City", name: "Floriano", addressRegion: "PI", addressCountry: "BR" },
+          parentOrganization: {
+            "@type": "EducationalOrganization",
+            name: "Unidade Escolar Osvaldo da Costa e Silva",
+            address: {
+              "@type": "PostalAddress",
+              addressLocality: "Floriano",
+              addressRegion: "PI",
+              addressCountry: "BR",
+            },
+          },
+        }),
+      },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,
