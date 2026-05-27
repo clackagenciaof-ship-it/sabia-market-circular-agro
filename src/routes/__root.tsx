@@ -52,6 +52,11 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 const SITE_URL = "https://sabia-market-circular-agro.lovable.app";
+const SITE_TITLE = "SABIÁ Market";
+const SITE_DESCRIPTION =
+  "SABIÁ Market conecta agricultura, água e mercado local para produtores, escolas e compradores em uma economia circular de alimentos.";
+const SOCIAL_IMAGE_URL =
+  "https://storage.googleapis.com/gpt-engineer-file-uploads/h5E5ohIG2uSnNU1YEQthzV9UoH02/social-images/social-1779858237313-ChatGPT_Image_27_de_mai._de_2026,_00_28_29.webp";
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
@@ -63,14 +68,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "SABIÁ Market" },
       { property: "og:locale", content: "pt_BR" },
       { name: "twitter:card", content: "summary_large_image" },
-      { title: "SABIÁ Market" },
-      { property: "og:title", content: "SABIÁ Market" },
-      { name: "twitter:title", content: "SABIÁ Market" },
-      { name: "description", content: "Agricultura, água e mercado em um só ciclo. Produzir melhor, vender a tempo, gastar menos e devolver vida ao solo. Conectamos produtores locais, compradores, e" },
-      { property: "og:description", content: "Agricultura, água e mercado em um só ciclo. Produzir melhor, vender a tempo, gastar menos e devolver vida ao solo. Conectamos produtores locais, compradores, e" },
-      { name: "twitter:description", content: "Agricultura, água e mercado em um só ciclo. Produzir melhor, vender a tempo, gastar menos e devolver vida ao solo. Conectamos produtores locais, compradores, e" },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/h5E5ohIG2uSnNU1YEQthzV9UoH02/social-images/social-1779858237313-ChatGPT_Image_27_de_mai._de_2026,_00_28_29.webp" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/h5E5ohIG2uSnNU1YEQthzV9UoH02/social-images/social-1779858237313-ChatGPT_Image_27_de_mai._de_2026,_00_28_29.webp" },
+      { title: SITE_TITLE },
+      { property: "og:title", content: SITE_TITLE },
+      { name: "twitter:title", content: SITE_TITLE },
+      { name: "description", content: SITE_DESCRIPTION },
+      { property: "og:description", content: SITE_DESCRIPTION },
+      { name: "twitter:description", content: SITE_DESCRIPTION },
+      { property: "og:image", content: SOCIAL_IMAGE_URL },
+      { name: "twitter:image", content: SOCIAL_IMAGE_URL },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
     scripts: [
