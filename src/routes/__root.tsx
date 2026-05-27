@@ -76,6 +76,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:description", content: SITE_DESCRIPTION },
       { property: "og:image", content: SOCIAL_IMAGE_URL },
       { name: "twitter:image", content: SOCIAL_IMAGE_URL },
+      { title: "SABIÁ Market" },
+      { property: "og:title", content: "SABIÁ Market" },
+      { name: "twitter:title", content: "SABIÁ Market" },
+      { name: "description", content: "Agricultura, água e mercado em um só ciclo.
+Conectamos produtores locais, compradores, escolas e a horta comunitária em uma plataforma simples e dinâmica." },
+      { property: "og:description", content: "Agricultura, água e mercado em um só ciclo.
+Conectamos produtores locais, compradores, escolas e a horta comunitária em uma plataforma simples e dinâmica." },
+      { name: "twitter:description", content: "Agricultura, água e mercado em um só ciclo.
+Conectamos produtores locais, compradores, escolas e a horta comunitária em uma plataforma simples e dinâmica." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/h5E5ohIG2uSnNU1YEQthzV9UoH02/social-images/social-1779859981837-ChatGPT_Image_26_de_mai._de_2026,_20_09_02.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/h5E5ohIG2uSnNU1YEQthzV9UoH02/social-images/social-1779859981837-ChatGPT_Image_26_de_mai._de_2026,_20_09_02.webp" },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
     scripts: [
