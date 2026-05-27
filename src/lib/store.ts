@@ -62,14 +62,14 @@ const seedProducts: Product[] = [
   { id: "p1", nome: "Alface crespa", categoria: "Verduras", preco: 3.0, unidade: "unidade", produtor: "Dona Maria Hortaliças", estoque: 20, foto: "https://images.unsplash.com/photo-1622205313162-be1d5712a43f?w=600&q=70" },
   { id: "p2", nome: "Tomate", categoria: "Legumes", preco: 7.0, unidade: "kg", produtor: "Sítio Boa Esperança", estoque: 15, foto: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=600&q=70" },
   { id: "p3", nome: "Banana prata", categoria: "Frutas", preco: 5.0, unidade: "kg", produtor: "Seu João da Feira", estoque: 25, foto: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&q=70" },
-  { id: "p4", nome: "Coentro", categoria: "Temperos", preco: 2.0, unidade: "maço", produtor: "Horta Escolar Osvaldo", estoque: 30, foto: "https://images.unsplash.com/photo-1600880292210-859fff803a14?w=600&q=70" },
+  { id: "p4", nome: "Coentro", categoria: "Temperos", preco: 2.0, unidade: "maço", produtor: "Horta Escolar Osvaldo", estoque: 30, foto: "https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=600&q=70" },
   { id: "p5", nome: "Macaxeira", categoria: "Raízes e tubérculos", preco: 4.0, unidade: "kg", produtor: "Associação Raízes do Piauí", estoque: 40, foto: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=600&q=70" },
 ];
 
 const seedSurplus: Surplus[] = [
   { id: "s1", produto: "Alface crespa", produtor: "Dona Maria Hortaliças", quantidadeKg: 5, desconto: 50, tipo: "desconto", foto: "https://images.unsplash.com/photo-1622205313162-be1d5712a43f?w=600&q=70" },
   { id: "s2", produto: "Banana prata madura", produtor: "Seu João da Feira", quantidadeKg: 8, desconto: 70, tipo: "social", foto: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&q=70" },
-  { id: "s3", produto: "Coentro", produtor: "Horta Escolar Osvaldo", quantidadeKg: 3, desconto: 100, tipo: "doacao", foto: "https://images.unsplash.com/photo-1600880292210-859fff803a14?w=600&q=70" },
+  { id: "s3", produto: "Coentro", produtor: "Horta Escolar Osvaldo", quantidadeKg: 3, desconto: 100, tipo: "doacao", foto: "https://images.unsplash.com/photo-1615485925600-97237c4fc1ec?w=600&q=70" },
 ];
 
 const now = new Date();
@@ -114,11 +114,11 @@ function useLocalStorage<T>(key: string, initial: T) {
   return [value, setValue] as const;
 }
 
-export const useProducts = () => useLocalStorage<Product[]>("sabia.products.v2", seedProducts);
-export const useSurplus = () => useLocalStorage<Surplus[]>("sabia.surplus.v2", seedSurplus);
-export const useOrders = () => useLocalStorage<Order[]>("sabia.orders.v2", seedOrders);
-export const useWater = () => useLocalStorage<WaterLog[]>("sabia.water.v2", seedWater);
-export const useWaste = () => useLocalStorage<WasteLog[]>("sabia.waste.v2", seedWaste);
+export const useProducts = () => useLocalStorage<Product[]>("sabia.products.v3", seedProducts);
+export const useSurplus = () => useLocalStorage<Surplus[]>("sabia.surplus.v3", seedSurplus);
+export const useOrders = () => useLocalStorage<Order[]>("sabia.orders.v3", seedOrders);
+export const useWater = () => useLocalStorage<WaterLog[]>("sabia.water.v3", seedWater);
+export const useWaste = () => useLocalStorage<WasteLog[]>("sabia.waste.v3", seedWaste);
 
 export { CATEGORIAS };
 
