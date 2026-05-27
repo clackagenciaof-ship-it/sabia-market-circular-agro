@@ -93,11 +93,12 @@ function Mercado() {
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
+            aria-label="Buscar produto ou produtor"
             placeholder="Buscar produto ou produtor..."
             className="w-full pl-9 pr-3 py-2.5 rounded-lg border bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </div>
-        <select value={cat} onChange={(e) => setCat(e.target.value)} className="rounded-lg border bg-white px-3 py-2.5 text-sm">
+        <select value={cat} onChange={(e) => setCat(e.target.value)} aria-label="Filtrar por categoria" className="rounded-lg border bg-white px-3 py-2.5 text-sm">
           <option>Todas</option>
           {CATEGORIAS.map((c) => <option key={c}>{c}</option>)}
         </select>
@@ -114,22 +115,22 @@ function Mercado() {
           onSubmit={(e) => { e.preventDefault(); addProduto(e.currentTarget); }}
           className="mb-8 rounded-2xl border bg-card p-5 shadow-sm"
         >
-          <h3 className="font-bold text-lg mb-4">Novo produto</h3>
+          <h2 className="font-bold text-lg mb-4">Novo produto</h2>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <input name="nome" placeholder="Nome do produto" className="rounded-md border px-3 py-2 text-sm" required />
-            <input name="produtor" placeholder="Produtor" className="rounded-md border px-3 py-2 text-sm" required />
-            <select name="categoria" className="rounded-md border px-3 py-2 text-sm bg-white">
+            <input name="nome" aria-label="Nome do produto" placeholder="Nome do produto" className="rounded-md border px-3 py-2 text-sm" required />
+            <input name="produtor" aria-label="Produtor" placeholder="Produtor" className="rounded-md border px-3 py-2 text-sm" required />
+            <select name="categoria" aria-label="Categoria" className="rounded-md border px-3 py-2 text-sm bg-white">
               {CATEGORIAS.map((c) => <option key={c}>{c}</option>)}
             </select>
-            <input name="preco" type="number" step="0.1" min="0" placeholder="Preço (R$)" className="rounded-md border px-3 py-2 text-sm" required />
-            <select name="unidade" className="rounded-md border px-3 py-2 text-sm bg-white">
+            <input name="preco" aria-label="Preço" type="number" step="0.1" min="0" placeholder="Preço (R$)" className="rounded-md border px-3 py-2 text-sm" required />
+            <select name="unidade" aria-label="Unidade de medida" className="rounded-md border px-3 py-2 text-sm bg-white">
               <option value="unidade">por unidade</option>
               <option value="kg">por kg</option>
               <option value="maço">por maço</option>
               <option value="dúzia">por dúzia</option>
               <option value="L">por litro</option>
             </select>
-            <input name="estoque" type="number" min="0" placeholder="Quantidade disponível" className="rounded-md border px-3 py-2 text-sm" required />
+            <input name="estoque" aria-label="Quantidade em estoque" type="number" min="0" placeholder="Quantidade disponível" className="rounded-md border px-3 py-2 text-sm" required />
           </div>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-[auto_1fr_1fr] items-center">
@@ -165,6 +166,7 @@ function Mercado() {
         </form>
       )}
 
+      <h2 className="text-xl font-bold mb-4">Produtos disponíveis</h2>
       <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((p) => (
           <ProductCard key={p.id} p={p} onReserve={() => setReserveFor(p)} />
@@ -248,8 +250,9 @@ function ReserveModal({
           className="space-y-3"
         >
           <div>
-            <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Nome do comprador</label>
+            <label htmlFor="comprador" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Nome do comprador</label>
             <input
+              id="comprador"
               value={comprador}
               onChange={(e) => setComprador(e.target.value)}
               placeholder="Ex: Ana Clara"
@@ -259,10 +262,11 @@ function ReserveModal({
             />
           </div>
           <div>
-            <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+            <label htmlFor="quantidade" className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Quantidade ({product.unidade})
             </label>
             <input
+              id="quantidade"
               type="number"
               min={1}
               max={product.estoque}
