@@ -76,17 +76,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:description", content: SITE_DESCRIPTION },
       { property: "og:image", content: SOCIAL_IMAGE_URL },
       { name: "twitter:image", content: SOCIAL_IMAGE_URL },
-      { title: "SABIÁ Market" },
-      { property: "og:title", content: "SABIÁ Market" },
-      { name: "twitter:title", content: "SABIÁ Market" },
-      { name: "description", content: "Agricultura, água e mercado em um só ciclo.
-Conectamos produtores locais, compradores, escolas e a horta comunitária em uma plataforma simples e dinâmica." },
-      { property: "og:description", content: "Agricultura, água e mercado em um só ciclo.
-Conectamos produtores locais, compradores, escolas e a horta comunitária em uma plataforma simples e dinâmica." },
-      { name: "twitter:description", content: "Agricultura, água e mercado em um só ciclo.
-Conectamos produtores locais, compradores, escolas e a horta comunitária em uma plataforma simples e dinâmica." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/4317deaa-4436-4b22-8252-d29a17a4c298" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/4317deaa-4436-4b22-8252-d29a17a4c298" },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
     scripts: [
