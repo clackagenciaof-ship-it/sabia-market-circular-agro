@@ -44,7 +44,7 @@ function Home() {
             </div>
 
             <h1 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-brand-blue leading-[1.05]">
-              SABIÁ Market
+              SABIÁ Market — Agricultura, água e mercado local
             </h1>
             <p className="mt-3 text-xl sm:text-2xl font-semibold text-brand-green">
               Agricultura, água e mercado em um só ciclo.
