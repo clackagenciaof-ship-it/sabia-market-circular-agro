@@ -133,3 +133,6 @@ Floriano - PI
 ## Status
 
 MVP em desenvolvimento para demonstração funcional.
+
+## Contribuição 
+Ana Beatriz da Silva Teles — colaborou na validação do problema e apoio à apresentação.
