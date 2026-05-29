@@ -136,3 +136,5 @@ MVP em desenvolvimento para demonstração funcional.
 
 ## Contribuição 
 Ana Beatriz da Silva Teles — colaborou na validação do problema e apoio à apresentação.
+
+Maria Clara de Araujo Costa — colaborou na documentação, slides e organização da apresentação.
