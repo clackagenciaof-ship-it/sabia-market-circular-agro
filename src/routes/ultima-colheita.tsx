@@ -24,6 +24,7 @@ const tipoMeta: Record<Surplus["tipo"], { label: string; cls: string; icon: any 
 
 function UltimaColheita() {
   const [surplus, setSurplus] = useSurplus();
+  const [products] = useProducts();
   const [toast, setToast] = useState<string | null>(null);
   const [fotoPreview, setFotoPreview] = useState<string>("");
   const [filtroTipo, setFiltroTipo] = useState<string>("Todos");
