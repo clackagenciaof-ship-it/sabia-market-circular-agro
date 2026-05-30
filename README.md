@@ -138,3 +138,5 @@ MVP em desenvolvimento para demonstração funcional.
 Ana Beatriz da Silva Teles — colaborou na validação do problema e apoio à apresentação.
 
 Maria Clara de Araujo Costa — colaborou na documentação, slides e organização da apresentação.
+
+Luiz Gustavo da Silva Nascimento — colaborou nos testes do Mercado Local e reservas.
