@@ -140,3 +140,5 @@ Ana Beatriz da Silva Teles — colaborou na validação do problema e apoio à a
 Maria Clara de Araujo Costa — colaborou na documentação, slides e organização da apresentação.
 
 Luiz Gustavo da Silva Nascimento — colaborou nos testes do Mercado Local e reservas.
+
+Jhonnathas Willian da Costa Gomes — colaborou nos testes do MVP e demonstração prática.
