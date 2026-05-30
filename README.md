@@ -142,3 +142,5 @@ Maria Clara de Araujo Costa — colaborou na documentação, slides e organizaç
 Luiz Gustavo da Silva Nascimento — colaborou nos testes do Mercado Local e reservas.
 
 Jhonnathas Willian da Costa Gomes — colaborou nos testes do MVP e demonstração prática.
+
+Joiza Carvalho da Silva Costa — colaborou na BioMerenda, impacto social e sustentabilidade.
