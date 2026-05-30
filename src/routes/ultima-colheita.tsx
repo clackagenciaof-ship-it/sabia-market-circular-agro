@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
 import { Recycle, Heart, Tag, Gift, ImageIcon, Upload, MapPin, AlertTriangle } from "lucide-react";
-import { uid, useSurplus, type Surplus } from "../lib/store";
+import { uid, useSurplus, useProducts, type Surplus } from "../lib/store";
 import { pageHead } from "../lib/seo";
 
 export const Route = createFileRoute("/ultima-colheita")({
