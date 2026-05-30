@@ -181,63 +181,6 @@ function UltimaColheita() {
         )}
       </div>
 
-      <section className="mt-14">
-        <header className="mb-4">
-          <div className="inline-flex items-center gap-2 text-brand-green-dark text-xs font-semibold uppercase tracking-wider mb-1">
-            <Tag className="h-4 w-4" /> Plataforma completa
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold">Todos os itens e produtos ({products.length})</h2>
-          <p className="text-muted-foreground mt-1 text-sm">
-            Catálogo completo do SABIÁ Market — produtores, escolas, associações e cooperativas.
-          </p>
-        </header>
-
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {products.map((p) => (
-            <article key={p.id} className="rounded-2xl border bg-card overflow-hidden shadow-sm">
-              <div className="aspect-[4/3] bg-brand-green-soft relative overflow-hidden">
-                {p.foto ? (
-                  <img src={p.foto} alt={p.nome} className="h-full w-full object-cover" loading="lazy" />
-                ) : (
-                  <div className="h-full w-full flex items-center justify-center text-brand-green">
-                    <ImageIcon className="h-12 w-12 opacity-40" />
-                  </div>
-                )}
-                <span className="absolute top-2 left-2 inline-flex items-center gap-1 text-[11px] font-bold rounded-full px-2.5 py-1 shadow bg-white text-foreground/80">
-                  {p.categoria}
-                </span>
-                {p.ultimaColheita && (
-                  <span className="absolute top-2 right-2 inline-flex items-center gap-1 text-[11px] font-bold rounded-full px-2.5 py-1 shadow bg-accent text-accent-foreground">
-                    <Recycle className="h-3 w-3" /> Última colheita
-                  </span>
-                )}
-              </div>
-              <div className="p-4">
-                <h3 className="font-bold">{p.nome}</h3>
-                <p className="text-xs text-muted-foreground">{p.produtor} · {p.tipoAnunciante}</p>
-                <p className="text-xs text-foreground/70 inline-flex items-center gap-1 mt-1">
-                  <MapPin className="h-3 w-3 text-brand-blue" />{p.cidade} - {p.estado}
-                </p>
-                <p className="text-[11px] text-muted-foreground mt-1">{p.localComercializacao}</p>
-                <div className="mt-3 flex items-end justify-between">
-                  <div>
-                    <div className="text-xl font-extrabold text-brand-green-dark">
-                      R$ {p.preco.toFixed(2)}
-                      <span className="text-xs font-normal text-muted-foreground"> / {p.unidade}</span>
-                    </div>
-                    <div className="text-[11px] text-muted-foreground">Estoque: {p.estoque}</div>
-                  </div>
-                </div>
-              </div>
-            </article>
-          ))}
-          {products.length === 0 && (
-            <p className="text-sm text-muted-foreground col-span-full text-center py-12">
-              Nenhum produto cadastrado ainda.
-            </p>
-          )}
-        </div>
-      </section>
 
 
       {toast && (
